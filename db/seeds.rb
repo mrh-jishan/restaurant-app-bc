@@ -110,7 +110,7 @@ csv.each do |row|
       start_time = DateTime.parse(times_range[0]).strftime("%H:%M")
       end_time = DateTime.parse(times_range[1]).strftime("%H:%M")
 
-      puts "Stored value--------------------: #{days} day: #{week_days_arr} time range: #{times_range}"
+      puts "Stored value: #{days} day: #{week_days_arr} time range: #{times_range}"
 
       week_days_arr.each do |day|
         @restaurant.opening_hours.create(:day_of_week => @weeks.find_index(day), :opens => start_time, :closes => end_time,)
