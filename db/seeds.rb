@@ -52,8 +52,10 @@ csv.each do |row|
       start_time = DateTime.parse(times_range[0]).strftime("%H:%M")
       end_time = DateTime.parse(times_range[1]).strftime("%H:%M")
 
+      puts "Stored value: #{days} day: #{week_days_arr} start time: #{start_time} and end time: #{end_time}"
+
       week_days_arr.each do |day|
-        @restaurant.opening_hours.create(:day_of_week => day, :opens => start_time, :closes => end_time,)
+        @restaurant.opening_hours.create(:day_of_week => @weeks.find_index(day), :opens => start_time, :closes => end_time,)
       end
     end
 
@@ -68,7 +70,7 @@ csv.each do |row|
 
       week_days_arr = get_days(first, last)
 
-      week_days = days.split(" ")[1]
+      week_days = days.split(",")[1].split(' ')[0]
       week_days_arr << @normalize_days[week_days]
 
 
@@ -76,8 +78,10 @@ csv.each do |row|
       start_time = DateTime.parse(times_range[0]).strftime("%H:%M")
       end_time = DateTime.parse(times_range[1]).strftime("%H:%M")
 
+      puts "Stored value: #{days} day: #{week_days_arr} start time: #{start_time} and end time: #{end_time}"
+
       week_days_arr.each do |day|
-        @restaurant.opening_hours.create(:day_of_week => day, :opens => start_time, :closes => end_time,)
+        @restaurant.opening_hours.create(:day_of_week => @weeks.find_index(day), :opens => start_time, :closes => end_time,)
       end
     end
   end
