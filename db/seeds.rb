@@ -69,7 +69,6 @@ csv.each do |row|
       puts "Range: #{days} first: #{first} and last: #{last}"
 
       week_days_arr = get_days(first, last)
-
       week_days = days.split(",")[1].split(' ')[0]
       week_days_arr << @normalize_days[week_days]
 
@@ -79,6 +78,39 @@ csv.each do |row|
       end_time = DateTime.parse(times_range[1]).strftime("%H:%M")
 
       puts "Stored value: #{days} day: #{week_days_arr} start time: #{start_time} and end time: #{end_time}"
+
+      week_days_arr.each do |day|
+        @restaurant.opening_hours.create(:day_of_week => @weeks.find_index(day), :opens => start_time, :closes => end_time,)
+      end
+    end
+
+    # Sun 10 am - 11 pm
+    if days.match(/^(\w{3,5}[\s]*\d{1,2}[:]*[\d{1,2}]*[\s]\w{2}[\s]*[-][\s]*\d{2}[:]*[\d{1,2}]*[\s]*\w{2})/)
+      week_day = @normalize_days[days.split(" ")[0]]
+      times_range = days.split(' ')[1..-1].join(' ').split('-').map(&:strip)
+      start_time = DateTime.parse(times_range[0]).strftime("%H:%M")
+      end_time = DateTime.parse(times_range[1]).strftime("%H:%M")
+
+      puts "Stored value: #{days} day: #{week_day} start time: #{start_time} and end time: #{end_time}"
+      @restaurant.opening_hours.create(:day_of_week => @weeks.find_index(week_day), :opens => start_time, :closes => end_time,)
+
+    end
+
+    # Mon, Thurs, Sat 7:15 am - 8:15 pm
+    if days.match(/^(^(?:[a-zA-Z0-9 ]+,)*[a-zA-Z0-9 ]+[\s\d{1,2}][:][\d{1,2}]*[\s]*\w{2}[\s]*[-][\s]*\w{1,2}[:][\w{1,2}]*[\s]*\w{2})/)
+
+      week_days_range = days.split(",").map(&:strip)
+      last_element = week_days_range.last.split(' ').first
+      week_days = week_days_range[0...-1] << last_element
+
+      week_days_arr =  week_days.map {|day| @normalize_days[day]}
+      last_index = days.index(last_element) + last_element.length
+
+      times_range = days[last_index..-1].split('-').map(&:strip)
+      start_time = DateTime.parse(times_range[0]).strftime("%H:%M")
+      end_time = DateTime.parse(times_range[1]).strftime("%H:%M")
+
+      puts "Stored value--------------------: #{days} day: #{week_days_arr} time range: #{times_range}"
 
       week_days_arr.each do |day|
         @restaurant.opening_hours.create(:day_of_week => @weeks.find_index(day), :opens => start_time, :closes => end_time,)

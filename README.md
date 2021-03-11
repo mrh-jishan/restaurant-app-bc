@@ -1,24 +1,34 @@
-# README
+regex 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Mon-Sun 11:30 am - 9 pm
 
-Things you may want to cover:
+Mon-Sun 11:30 am - 9:12 pm
 
-* Ruby version
+```
+/^(\w{3,5}[-]\w{3,5}\s\d{1,2}[:]*[\d{1,2}]*\s\w{2}\s[-]\s\d{1,2}[:]*[\d{1,2}]*\s\w{2})/
+```
 
-* System dependencies
 
-* Configuration
+Tues - Weds, Fri 11 pm - 2:45 pm
 
-* Database creation
+Mon -  Thu,  Sun 11:30 am - 9 pm 
 
-* Database initialization
+```
+/^(\w{3,4}\s*[-]\s*\w{3,5}[,]\s*\w{3,5}\s*\d{1,2}[:]*[\d{1,2}]*\s\w{2}\s[-]\s\d{1,2}[:]*[\d{1,2}]*\s\w{2})/
+```
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+Sun 10 am - 11 pm
 
-* Deployment instructions
+```
+/^(\w{3,5}[\s]*\d{1,2}[:]*[\d{1,2}]*[\s]\w{2}[\s]*[-][\s]*\d{2}[:]*[\d{1,2}]*[\s]*\w{2})/
+```
 
-* ...
+
+
+
+Mon, Thurs, Sat 7:15 am - 8:15 pm
+
+```
+^(?:[a-zA-Z0-9 ]+,)*[a-zA-Z0-9 ]+[\s\d{1,2}][:][\d{1,2}]*[\s]*\w{2}[\s]*[-][\s]*\w{1,2}[:][\w{1,2}]*[\s]*\w{2}
+```
