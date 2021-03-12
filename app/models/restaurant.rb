@@ -3,7 +3,7 @@ class Restaurant < ApplicationRecord
   default_scope { order(created_at: :desc) }
 
   has_many :opening_hours
-  belongs_to :favourite_item
+  # belongs_to :favourite_item
 
   validates_presence_of :name
 
