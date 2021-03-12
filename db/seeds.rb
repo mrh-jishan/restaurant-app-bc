@@ -97,7 +97,7 @@ csv.each do |row|
     end
 
     # Mon, Thurs, Sat 7:15 am - 8:15 pm
-    if days.match(/^(^(?:[a-zA-Z0-9 ]+,)*[a-zA-Z0-9 ]+[\s\d{1,2}][:][\d{1,2}]*[\s]*\w{2}[\s]*[-][\s]*\w{1,2}[:]*[\w{1,2}]*[\s]*\w{2})/) and  days.include? ','
+    if days.match(/^(^(?:[a-zA-Z0-9 ]+,)*[a-zA-Z0-9 ]+[\s\d{1,2}][:]*[\d{1,2}]*[\s]*\w{2}[\s]*[-][\s]*\w{1,2}[:]*[\w{1,2}]*[\s]*\w{2})/) and  days.include? ','
       week_days_range = days.split(",").map(&:strip)
       last_element = week_days_range.last.split(' ').first
       week_days = week_days_range[0...-1] << last_element
