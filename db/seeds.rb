@@ -40,15 +40,17 @@ csv.each do |row|
 
   restaurant_opening_time_range.each do |days|
     # Mon-Sun 11:30 am - 9 pm
-    if days.match(/^(\w{3,5}[-]\w{3,5}\s\d{1,2}[:]*[\d{1,2}]*\s\w{2}\s[-]\s\d{1,2}[:]*[\d{1,2}]*\s\w{2})/)
-      week_days_range = days.split(" ").first.split('-')
-      first = @normalize_days[week_days_range[0]]
-      last = @normalize_days[week_days_range[1]]
+    if days.match(/^(\w{3,5}[\s]*[-][\s]*\w{3,5}[\s]*\d{1,2}[:]*[\d{1,2}]*[\s]*\w{2}\s[-]\s\d{1,2}[:]*[\d{1,2}]*\s\w{2})/)
+      first_date = days.split('-')[0].strip
+      last_date = days.split('-')[1].split(' ')[0].strip
 
-      puts "Range: #{days} first: #{first} and last: #{last}"
+      first = @normalize_days[first_date]
+      last = @normalize_days[last_date]
+
       week_days_arr = get_days(first, last)
+      last_index  = days.index(last_date) + last_date.length
 
-      times_range = days.split(' ')[1..-1].join(' ').split('-').map(&:strip)
+      times_range = days[last_index..-1].strip.split('-').map(&:strip)
       start_time = DateTime.parse(times_range[0]).strftime("%H:%M")
       end_time = DateTime.parse(times_range[1]).strftime("%H:%M")
 
@@ -60,18 +62,16 @@ csv.each do |row|
     end
 
     # Mon-Thu, Sun 11:30 am - 9 pm
+    # Sat - Sun 8:30 am - 12:45 pm
     if days.match(/^(\w{3,4}\s*[-]\s*\w{3,5}[,]\s*\w{3,5}\s*\d{1,2}[:]*[\d{1,2}]*\s\w{2}\s[-]\s\d{1,2}[:]*[\d{1,2}]*\s\w{2})/)
       week_days_range = days.split(",")
       first_week_days_range = week_days_range.first.split('-').map(&:strip)
       first = @normalize_days[first_week_days_range[0]]
       last = @normalize_days[first_week_days_range[1]]
 
-      puts "Range: #{days} first: #{first} and last: #{last}"
-
       week_days_arr = get_days(first, last)
       week_days = days.split(",")[1].split(' ')[0]
       week_days_arr << @normalize_days[week_days]
-
 
       times_range = days.split(' ')[2..-1].join(' ').split('-').map(&:strip)
       start_time = DateTime.parse(times_range[0]).strftime("%H:%M")
@@ -85,7 +85,7 @@ csv.each do |row|
     end
 
     # Sun 10 am - 11 pm
-    if days.match(/^(\w{3,5}[\s]*\d{1,2}[:]*[\d{1,2}]*[\s]\w{2}[\s]*[-][\s]*\d{2}[:]*[\d{1,2}]*[\s]*\w{2})/)
+    if days.match(/^(\w{3,5}[\s]*\d{1,2}[:]*[\d{1,2}]*[\s]*\w{2}[\s]*[-][\s]*\d{1,2}[:]*[\d{1,2}]*[\s]*\w{2})/) and not days.include? ','
       week_day = @normalize_days[days.split(" ")[0]]
       times_range = days.split(' ')[1..-1].join(' ').split('-').map(&:strip)
       start_time = DateTime.parse(times_range[0]).strftime("%H:%M")
@@ -97,8 +97,7 @@ csv.each do |row|
     end
 
     # Mon, Thurs, Sat 7:15 am - 8:15 pm
-    if days.match(/^(^(?:[a-zA-Z0-9 ]+,)*[a-zA-Z0-9 ]+[\s\d{1,2}][:][\d{1,2}]*[\s]*\w{2}[\s]*[-][\s]*\w{1,2}[:][\w{1,2}]*[\s]*\w{2})/)
-
+    if days.match(/^(^(?:[a-zA-Z0-9 ]+,)*[a-zA-Z0-9 ]+[\s\d{1,2}][:][\d{1,2}]*[\s]*\w{2}[\s]*[-][\s]*\w{1,2}[:][\w{1,2}]*[\s]*\w{2})/) and  days.include? ','
       week_days_range = days.split(",").map(&:strip)
       last_element = week_days_range.last.split(' ').first
       week_days = week_days_range[0...-1] << last_element

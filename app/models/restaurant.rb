@@ -7,8 +7,7 @@ class Restaurant < ApplicationRecord
 
   validates_presence_of :name
 
-
   scope :by_name, ->(value) { where("name ILIKE ?", "%#{value}%") }
-  scope :by_date_time, ->(start, ends) { joins(:opening_hours).where(:opening_hours => {day_of_week: start..ends}) }
+  scope :by_date_time, ->(days) { joins(:opening_hours).where(:opening_hours => {day_of_week: days.split(",").map(&:to_i)}) }
 
 end

@@ -3,7 +3,7 @@ class Api::V1::RestaurantsController < ApplicationController
   def index
     @restaurants = Restaurant
                        .by_name(params[:name])
-                       .by_date_time(params[:start], params[:ends])
+                       .by_date_time(params[:days])
                        .joins(:opening_hours)
                        .includes(:opening_hours)
                        .all
