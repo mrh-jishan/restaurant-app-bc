@@ -1,3 +1,16 @@
+## to start the project please follow the below commands
+
+- db create ``` rails db:create```
+
+- db migrate ```rails db:migrate```
+
+- db init data ```rails db:seed```
+
+start the program 
+
+``` rails s```
+
+
 regex 
 
 Mon-Sun 11:30 am - 9 pm
