@@ -33,7 +33,7 @@ end
 
 csv.each do |row|
   restaurant_name = row[0].strip
-  @restaurant = Restaurant.create(:name => restaurant_name)
+  @restaurant = Restaurant.create!(:name => restaurant_name)
 
   restaurant_opening_time_range = row[1].split('/').map(&:strip)
 
@@ -55,7 +55,7 @@ csv.each do |row|
       puts "Stored value: #{days} day: #{week_days_arr} start time: #{start_time} and end time: #{end_time}"
 
       week_days_arr.each do |day|
-        @restaurant.opening_hours.create(:day_of_week => @weeks.find_index(day), :opens => start_time, :closes => end_time,)
+        @restaurant.opening_hours.create!(:day_of_week => @weeks.find_index(day), :opens => start_time, :closes => end_time,)
       end
     end
 
@@ -80,7 +80,7 @@ csv.each do |row|
       puts "Stored value: #{days} day: #{week_days_arr} start time: #{start_time} and end time: #{end_time}"
 
       week_days_arr.each do |day|
-        @restaurant.opening_hours.create(:day_of_week => @weeks.find_index(day), :opens => start_time, :closes => end_time,)
+        @restaurant.opening_hours.create!(:day_of_week => @weeks.find_index(day), :opens => start_time, :closes => end_time,)
       end
     end
 
@@ -92,7 +92,7 @@ csv.each do |row|
       end_time = DateTime.parse(times_range[1]).strftime("%H:%M")
 
       puts "Stored value: #{days} day: #{week_day} start time: #{start_time} and end time: #{end_time}"
-      @restaurant.opening_hours.create(:day_of_week => @weeks.find_index(week_day), :opens => start_time, :closes => end_time,)
+      @restaurant.opening_hours.create!(:day_of_week => @weeks.find_index(week_day), :opens => start_time, :closes => end_time,)
 
     end
 
@@ -113,7 +113,7 @@ csv.each do |row|
       puts "Stored value: #{days} day: #{week_days_arr} time range: #{times_range}"
 
       week_days_arr.each do |day|
-        @restaurant.opening_hours.create(:day_of_week => @weeks.find_index(day), :opens => start_time, :closes => end_time,)
+        @restaurant.opening_hours.create!(:day_of_week => @weeks.find_index(day), :opens => start_time, :closes => end_time,)
       end
     end
   end
