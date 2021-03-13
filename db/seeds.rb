@@ -33,10 +33,10 @@ end
 
 csv.each do |row|
   restaurant_name = row[0].strip
-  @restaurant = Restaurant.create!(:name => restaurant_name)
+  open_hours = row[1].strip
+  @restaurant = Restaurant.create!(:name => restaurant_name, :open_hours=> open_hours)
 
-  restaurant_opening_time_range = row[1].split('/').map(&:strip)
-
+  restaurant_opening_time_range = open_hours.split('/').map(&:strip)
 
   restaurant_opening_time_range.each do |days|
     # Mon-Sun 11:30 am - 9 pm
