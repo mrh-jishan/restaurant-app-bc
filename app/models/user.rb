@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 
   has_many :favourites
+  has_many :invitations
 
   validates :name, :presence => true, :length => {maximum: 120}
   validates :username, :presence => true, :length => {minimum: 6, maximum: 15}, :uniqueness => {case_sensitive: false}

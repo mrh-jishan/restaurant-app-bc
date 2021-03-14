@@ -38,5 +38,18 @@ module RestaurantAppBc
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Mail delivery
+    config.action_mailer.default_url_options = {:host => 'dev.your-host.com'}
+
+    config.action_mailer.smtp_settings = {
+        :address => ENV['SES_ADDRESS'],
+        :port => 587,
+        :user_name => ENV["SES_SMTP_USERNAME"], #Your SMTP user
+        :password => ENV["SES_SMTP_PASSWORD"], #Your SMTP password
+        :authentication => :login,
+        :enable_starttls_auto => true
+    }
+
   end
 end

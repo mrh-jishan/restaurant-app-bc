@@ -1,0 +1,13 @@
+Hi there,
+<br>
+You are invited to collaborate (add, remove, edit name) on the collections.
+<br>
+<%= link_to "Click Here", "#{ENV['CONFIRMATION_LINK']}#{@invitation.token}" %>
+<br>
+Or copy the below link to your browser
+<br>
+<%= "#{ENV['CONFIRMATION_LINK']}#{@invitation.token}" %>
+<br>
+Thanks you
+<br>
+<%= @invitation.user.name %>,
