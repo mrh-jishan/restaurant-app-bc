@@ -9,5 +9,6 @@ class Restaurant < ApplicationRecord
 
   scope :by_name, ->(value) { where("name ILIKE ?", "%#{value}%") }
   scope :by_date_time, ->(days) { joins(:opening_hours).where(:opening_hours => {day_of_week: days.split(",").map(&:to_i)}) }
+  scope :by_opens_and_closes_hours, ->(opens, closes) { joins(:opening_hours).where("opens < ? and closes > ?", opens, closes) }
 
 end
