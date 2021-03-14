@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create]
       resources :auth, only: [:create]
       resources :restaurants, only: [:index]
-      resources :favourites, only: [:create, :index]
+      resources :favourites, only: [:create, :index, :destroy, :update]
       resources :invitations, only: [:create, :index, :show]
     end
   end

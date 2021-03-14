@@ -18,6 +18,26 @@ class Api::V1::FavouritesController < SecureController
     end
   end
 
+  def destroy
+    @favourite = @current_user.favourites.find_by_id(params[:id])
+    if @favourite.blank?
+      json_response({}, 201, "Record not found")
+    else
+      @favourite.destroy
+      json_response({}, 201, "Record deleted")
+    end
+  end
+
+  def update
+    @favourite = @current_user.favourites.find_by_id(params[:id])
+    if @favourite.blank?
+      json_response({}, 201, "Record not found")
+    else
+      @favourite.update_attribute(:name, params[:name])
+      json_response({}, 201, "Record updated")
+    end
+  end
+
 
   private
 
