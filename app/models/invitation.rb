@@ -5,7 +5,7 @@ class Invitation < ApplicationRecord
   before_create :generate_token
   after_create :deliver_invitation_email
 
-  validates_presence_of :email
+  validates :email, :presence => true, format: {with: URI::MailTo::EMAIL_REGEXP}
 
   private
 

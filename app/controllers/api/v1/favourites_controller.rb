@@ -2,7 +2,7 @@ class Api::V1::FavouritesController < SecureController
   included :user
 
   def index
-    @favourites = Favourite
+    @favourites = @current_user.favourites
                       .joins([{:favourite_items => [:restaurant]}, :user])
                       .includes([{:favourite_items => [:restaurant]}, :user])
 
